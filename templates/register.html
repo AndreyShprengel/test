@@ -26,11 +26,17 @@
 	      <!-- Collect the nav links, forms, and other content for toggling -->
 	      <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
 	        <ul class="nav navbar-nav">
-	          <li><a href="/">Home</a></li>
-	          <li><a href="browse">Browse</a></li>
+	          <li ><a href="/">Home</a></li>
+	          <li><a href="about">About Us</a></li>
+	          <li><a href="facts">Facts</a></li>
+	          <li><a href="scores">Score Board</a></li>
 	        </ul>
 	        <ul class="nav navbar-nav navbar-right">
+	        	{% if user == None: %}
 	        	<li><a href="signin">Sign In</a></li>
+	        	{% else: %}
+	        	<li><a href="profile">My Profile</a></li>
+	        	{% endif %}
 	        </ul> 
 	      </div>
 	    </div>

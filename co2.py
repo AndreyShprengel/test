@@ -13,7 +13,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///co2.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///trips.db'
 db = SQLAlchemy(app, session_options = { 'expire_on_commit':False})
 
 
@@ -102,19 +102,19 @@ def register():
 
 @app.route('/signin', methods = ['POST', 'GET'])
 def signin():
-    
+    global user
     if request.method == 'POST':
-        user = request.form['username']
+        usernam = request.form['username']
         password = request.form['password']
         name = request.form['name']
         mpg = request.form['mpg']
         
-        new_user = Users(user, password,name,mpg)
+        new_user = Users(username, password,name,mpg)
         db.session.add(new_user)
         db.session.commit()
         return'User added'
     else:
-        return render_template('signin.html')
+        return render_template('signin.html', user = user)
 
 @app.route('/verifyuser', methods = ['POST', 'GET'])
 def verifyuser():

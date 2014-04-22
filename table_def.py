@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
 from datetime import datetime, timedelta
 
-engine = create_engine('sqlite:///co2.db', echo=True)
+engine = create_engine('sqlite:///trips.db', echo=True)
 Base = declarative_base()
 
 class Users(Base):
