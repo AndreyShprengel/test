@@ -60,12 +60,35 @@ def landing():
 def echo():
     print "hello"
     
-@app.route('/browse')
-def browse():
+@app.route('/scores')
+def scores():
     global user
-    bidsData = Bids.query.all()
-    pprint(bidsData)
-    return render_template('browse.html', bids = bidsData, user = user)
+    dailynames = []
+    weeklynames = []
+    monthlynames = []
+    stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date (date) between    date('now', '-7 days' ) and  date('now')  group by user_id order by points  DESC limit 5 ")
+    for item in stuff:
+		weeklynames.append(Users.query.filter_by( id = item.user_id).first().name)
+    stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date (date) between    date('now', '-7 days' ) and  date('now')  group by user_id order by points  DESC limit 5 ")
+    weekres= zip(weeklynames,stuff)
+    
+    stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date (date) between    date('now', '-1 days' ) and  date('now')  group by user_id order by points  DESC limit 5 ")
+    for item in stuff:
+		dailynames.append(Users.query.filter_by( id = item.user_id).first().name)
+    stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date (date) between    date('now', '-1 days' ) and  date('now')  group by user_id order by points  DESC limit 5 ")
+    dayres= zip(dailynames,stuff)
+    
+    stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date (date) between    date('now', '-30 days' ) and  date('now')  group by user_id order by points  DESC limit 5 ")
+    for item in stuff:
+		monthlynames.append(Users.query.filter_by( id = item.user_id).first().name)
+    stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date (date) between    date('now', '-30 days' ) and  date('now')  group by user_id order by points  DESC limit 5 ")
+    monthres= zip(monthlynames,stuff)
+    
+    
+    
+    print weekres
+     
+    return render_template('scores.html', user = user, week = weekres, day = dayres,month = monthres)
 
 @app.route('/register')
 def register():
@@ -121,7 +144,7 @@ def verifyuser():
 @app.route('/profile')
 def profile():
 	global user
-	
+
 	
 	weektotal = None
 	monthtotal = None
@@ -134,8 +157,6 @@ def profile():
 	for item in week:
 		weektotal =  item.total
 
-	
-    
 	return render_template('profile.html', user = user, trips = trips, week = weektotal, month = monthtotal)
 
 @app.route('/create')
