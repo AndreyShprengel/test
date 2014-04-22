@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+  	<title>SocialCO2</title>
+  	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js"></script>
+  
+    <!-- Bootstrap -->
+    <link href="{{ url_for('static', filename="css/bootstrap.min.css") }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename="js/bootstrap.js") }}" rel="stylesheet">
+	</head>
+	<body>
+		<div align="center">
+			<h1>SocialCO2</h1>
+		</div>
+		<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+			<div class="container">
+	      <div class="navbar-header">
+	        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	          <span class="sr-only">Toggle navigation</span>
+	          <span class="icon-bar"></span>
+	          <span class="icon-bar"></span>
+	          <span class="icon-bar"></span>
+	        </button>
+	        
+	      </div>
+	      <!-- Collect the nav links, forms, and other content for toggling -->
+	      <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
+	        <ul class="nav navbar-nav">
+	          <li><a href="/">Home</a></li>
+	          <li><a href="browse">Browse</a></li>
+	        </ul>
+	        <ul class="nav navbar-nav navbar-right">
+	        	<li><a href="signin">Sign In</a></li>
+	        </ul> 
+	      </div>
+	    </div>
+    </nav>
+    <div align="center">
+    	<h3>Register for SocialCO2!</h3>
+    </div>
+    <hr>
+  <div class = "row">
+	  <div class = "col-md-4 col-md-offset-4">
+	<form role="form">
+	  
+  <div class="form-group">
+	  <div class = "row">
+	  <div class = "col-md-6">
+	   <label for="fname">First Name</label>
+    <input type="text" class="form-control" id="fname" placeholder="Enter First Name">
+    </div>
+    <div class = "col-md-6">
+	   <label for="lname">Last Name</label>
+    <input type="text" class="form-control" id="lname" placeholder="Enter Last Name">
+    </div>
+    
+	  </div>
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+  </div>
+    <div class="form-group">
+    <label for="confirmInputPassword1">Confirm Password</label>
+    <input type="password" class="form-control" id="confirmInputPassword1" placeholder="Password">
+  </div>
+    <div class="form-group">
+    <label for="mpg">Enter You Vehicles MPG</label>
+    <input type="text" class="form-control" id="mpg" placeholder="Miles per Gallon">
+  </div>
+  
+  <button id = "submit" type = "button" class="btn btn-primary">Submit</button>
+  
+</form>
+	</div>
+	</div>
+<script>
+		$( "#submit").click(function() {
+	console.log("The server returned the following data:");
+	var uname = $( "#exampleInputEmail1" ).val();
+    var pword = $( "#exampleInputPassword1" ).val();
+    var n = $( "#fname" ).val() + " " + $( "#lname" ).val();
+    var m = $("#mpg").val();
+    
+	$.ajax({
+            url: "/signin",
+            type: "POST",
+            
+            data: { username: uname, password: pword, name: n, mpg: m},
+            success: function(data) {
+				console.log("The server returned the following data:");
+				window.location.href="/signin";
+            }
+        });
+  });
+</script>
+</body>
+</html>

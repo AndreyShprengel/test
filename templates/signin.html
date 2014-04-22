@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+  	<title>CharityBidder</title>
+  	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js"></script>
+    <!-- Bootstrap -->
+    <link href="{{ url_for('static', filename="css/bootstrap.min.css") }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename="js/bootstrap.js") }}" rel="stylesheet">
+	</head>
+	<body>
+		<div align="center">
+			<h1>Charity Bidder</h1>
+		</div>
+		<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+			<div class="container">
+	      <div class="navbar-header">
+	        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	          <span class="sr-only">Toggle navigation</span>
+	          <span class="icon-bar"></span>
+	          <span class="icon-bar"></span>
+	          <span class="icon-bar"></span>
+	        </button>
+	        
+	      </div>
+	      <!-- Collect the nav links, forms, and other content for toggling -->
+	      <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
+	        <ul class="nav navbar-nav">
+	          <li><a href="/">Home</a></li>
+	          <li><a href="browse">Browse</a></li>
+	        </ul>
+	        <ul class="nav navbar-nav navbar-right">
+	        	<li class="active"><a href="signin">Sign In</a></li>
+	        </ul> 
+	      </div>
+	    </div>
+    </nav>
+  <div class = "row">
+	  <div class = "col-md-6">
+	  	<div align="center">
+	  		<h2>Sign In:</h2>
+	  	</div>
+		<form role="form">  
+		  <div class="form-group">
+		  	<div class="row">
+		  		<div class="col-md-4 col-md-offset-4">
+
+					<label for="email">Email:</label>
+				    <input type="text" class="form-control" id="email" placeholder="Enter email address">
+				    
+					<label for="password">Password:</label>
+				    <input type="password" class="form-control" id="password" placeholder="Enter password">
+				</div>
+		    </div>
+		    <br>
+		    <div align="center">
+		    	<button type="button" id="submit" class="btn btn-primary">Submit</button>
+		    </div>
+		  </div>
+	    </form>
+	  </div>
+	  <div class="col-md-6">
+	  	<div align="center">
+	  		<h2>Don't have an account?</h2>
+	  		<br>
+	  		<br>
+	  		<a href="register"><button class="btn btn-lg">Register Today!</button></a>
+	  	</div>
+	  </div>
+	</div>
+	<script>
+		$( "#submit").click(function(e) {
+			var uname = $( "#email" ).val();
+    		var pword = $( "#password" ).val();
+ 		$.ajax({
+            url: "/verifyuser",
+            type: "POST",
+            
+            data: { username: uname, password: pword},
+            success: function(data) {
+				alert(data);
+				if(data == "Invalid username or password")
+				{
+					window.location.href="/signin";
+				}
+				else
+				{
+					window.location.href="/";
+				}
+            }
+        });
+  });
+</script>
+	</body>
+</html>
+

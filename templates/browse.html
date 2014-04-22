@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+  	<title>CharityBidder</title>
+  	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js"></script>
+    <!-- Bootstrap -->
+    <link href="{{ url_for('static', filename="css/bootstrap.min.css") }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename="js/bootstrap.js") }}" rel="stylesheet">
+	</head>
+	<body>
+		<div align="center">
+			<h1>Charity Bidder</h1>
+		</div>
+		<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+			<div class="container">
+	      <div class="navbar-header">
+	        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	          <span class="sr-only">Toggle navigation</span>
+	          <span class="icon-bar"></span>
+	          <span class="icon-bar"></span>
+	          <span class="icon-bar"></span>
+	        </button>
+	        
+	      </div>
+	      <!-- Collect the nav links, forms, and other content for toggling -->
+	      <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
+	        <ul class="nav navbar-nav">
+	          <li><a href="/">Home</a></li>
+	          <li class="active"><a href="browse">Browse</a></li>
+	        </ul>
+	        <ul class="nav navbar-nav navbar-right">
+	        	{% if user == None: %}
+	        	<li><a href="signin">Sign In</a></li>
+	        	{% else: %}
+	        	<li><a href="profile">My Profile</a></li>
+	        	{% endif %}
+	        </ul> 
+	      </div>
+	    </div>
+    </nav>
+    <div class="container">
+    	<div align="center">
+    		<h3>Select Organizations:</h3>
+    	</div>
+    	<div class="row">
+    		<div class="col-md-4">
+    			<div class="checkbox">
+					  <label>
+					    <input type="checkbox" value="">
+					    United Way
+					  </label>
+					</div>
+					<div class="checkbox">
+					  <label>
+					    <input type="checkbox" value="">
+					    Salvation Army
+					  </label>
+					</div>
+				</div>
+				<div class="col-md-4">
+    			<div class="checkbox">
+					  <label>
+					    <input type="checkbox" value="">
+					    Task Force for Global Health
+					  </label>
+					</div>
+					<div class="checkbox">
+					  <label>
+					    <input type="checkbox" value="">
+					    Feeding America
+					  </label>
+					</div>
+				</div>
+				<div class="col-md-4">
+    			<div class="checkbox">
+					  <label>
+					    <input type="checkbox" value="">
+					    Catholic Charities USA
+					  </label>
+					</div>
+					<div class="checkbox">
+					  <label>
+					    <input type="checkbox" value="">
+					    Goodwill Industries International
+					  </label>
+					</div>
+				</div>
+			</div>
+    	<div class="row">
+    		<div class="col-md-6">
+    			<input class="form-control input-sm" type="text" placeholder="Search">
+    		</div>
+    		<div class="col-md-3">
+    			<select class="form-control input-sm">
+					  <option>All Categories</option>
+					  <option>Antiques</option>
+					  <option>Art</option>
+					  <option>Books</option>
+					  <option>Camera & Photo</option>
+					  <option>Clothing</option>
+					  <option>Computers & Electronics</option>
+					  <option>Home & Garden</option>
+					  <option>Jewelry</option>
+					  <option>Sporting Goods</option>
+					  <option>Real Estate</option>
+					  <option>Other</option>
+					</select>
+				</div>
+				<div class="col-md-3">
+					<button type="button" class="btn btn-primary btn-sm">Search</button>
+				</div>
+			</div>
+    </div>
+    <hr>
+    <div align="center">
+    	<h2>All Results:</h2>
+    </div>
+     <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <table class="table table-hover">
+          <thread>
+            <tr>
+              <th>Picture:</th>
+              <th>Title:</th>
+              <th>Organization:</th>
+              <th>Current Bid:</th>
+              <th>Details & Bidding:</th>
+            </tr>
+          </thread>
+          <tbody>
+            {% for item in bids %}
+            <tr>
+              <td><img src="{{item.pic}}" height="100px" width="100px"></td>
+              <td>{{item.title}}</td>
+              <td>{{item.organization}}</td>
+              <td>{{item.currentbid}}</td>
+              <td><a href="details/{{item.id}}">See More</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+	</body>
+</html>

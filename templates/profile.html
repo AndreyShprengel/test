@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+  	<title>SocailCO2</title>
+  	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js"></script>
+    <!-- Bootstrap -->
+    <link href="{{ url_for('static', filename="css/bootstrap.min.css") }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename="js/bootstrap.js") }}" rel="stylesheet">
+	</head>
+	<body>
+		<div align="center">
+			<h1>SocialCO2</h1>
+		</div>
+		<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+			<div class="container">
+	      <div class="navbar-header">
+	        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	          <span class="sr-only">Toggle navigation</span>
+	          <span class="icon-bar"></span>
+	          <span class="icon-bar"></span>
+	          <span class="icon-bar"></span>
+	        </button>
+	        
+	      </div>
+	      <!-- Collect the nav links, forms, and other content for toggling -->
+	      <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
+	        <ul class="nav navbar-nav">
+	          <li><a href="/">Home</a></li>
+	          <li><a href="browse">Browse</a></li>
+	        </ul>
+	        <ul class="nav navbar-nav navbar-right">
+	        	{% if user == None: %}
+	        	<li><a href="signin">Sign In</a></li>
+	        	{% else: %}
+	        	<li class="active"><a href="profile">My Profile</a></li>
+	        	{% endif %}
+	        </ul> 
+	      </div>
+	    </div>
+    </nav>
+    <div class="container">
+    	<div align="center">
+    		<h2> {{user.name}} Profile Page</h4>
+    		<a href="create"><button type="button" class="btn btn-primary btn-lg">Add your last trip!</button></a>
+    <h3> Your activity summary:</h3>
+    <div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Weekly Total Points:</h3>
+  </div>
+  <div class="panel-body">
+    {{week}}
+  </div>
+</div>	
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Monthly Total Point:</h3>
+  </div>
+  <div class="panel-body">
+    {{month}}
+  </div>
+</div>
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+		 <label for = "t"><h3>Veiw all your recent trips:</h3></label>
+        <table id ="t" class="table table-hover">
+          <thread>
+            <tr>
+              <th>Points:</th>
+              <th>Date:</th>
+            
+             
+            </tr>
+          </thread>
+          <tbody>
+            {% for item in trips %}
+            <tr>
+              <td>{{item.points}}</td>
+              <td>{{item.date}}</td>
+              
+            
+             
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+			<br>
+    		
+    	</div>
+    </div>
+	</body>
+</html>
