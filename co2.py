@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, session
 from sqlalchemy import func 
 from sqlalchemy.sql import label
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -17,7 +17,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///trips.db'
 db = SQLAlchemy(app, session_options = { 'expire_on_commit':False})
 
 
-user = None
+
 app.debug = True
 
 class Users(db.Model):
@@ -54,7 +54,14 @@ class Trips(db.Model):
 @app.route('/')
 @app.route("/home/")
 def landing():
-    global user
+    if 'user' in session:
+        user_id = session['user']
+        user = Users.query.filter_by(id = user_id).first()
+        print session['user']
+    else:
+        print "No user signed in"
+        user = None
+    
     return render_template('home.html', user = user)
 @app.route('/echo/', methods = ['POST', 'GET'])
 def echo():
@@ -62,7 +69,11 @@ def echo():
     
 @app.route('/scores')
 def scores():
-    global user
+    if 'user' in session:
+        user_id = session['user']
+        user = Users.query.filter_by(id = user_id).first()
+    else:
+        user = None
     dailynames = []
     weeklynames = []
     monthlynames = []
@@ -102,7 +113,11 @@ def register():
 
 @app.route('/signin', methods = ['POST', 'GET'])
 def signin():
-    global user
+    if 'user' in session:
+        user_id = session['user']
+        user = Users.query.filter_by(id = user_id).first()
+    else:
+        user = None
     if request.method == 'POST':
         usernam = request.form['username']
         password = request.form['password']
@@ -118,7 +133,12 @@ def signin():
 
 @app.route('/verifyuser', methods = ['POST', 'GET'])
 def verifyuser():
-    global user
+    if 'user' in session:
+        user_id = session['user']
+        user = Users.query.filter_by(id = user_id).first()
+    else:
+        user = None
+   
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -136,38 +156,49 @@ def verifyuser():
             return 'Invalid username or password'
           
         else:
-            user = registered_user
+            session['user'] = registered_user.id
             print 'Login successful'
             print user
             return 'Login successful'
 
 @app.route('/profile')
 def profile():
-	global user
-
-	
-	weektotal = None
-	monthtotal = None
-	trips = Trips.query.filter_by(user_id = user.id).all()	
-	#result = db.session.query(Trips).filter(datetime.now() -Trips.date < timedelta ( minutes = 1)).query(Trips.user_id, label('totalpoints', func.sum(Trips.points))).group_by(Trips.user_id).all()
-	month = db.engine.execute( 'SELECT sum(points) total, user_id  FROM  trips where user_id = ' + str(user.id )+ " and  date (date) between    date('now', '-30 days' ) and  date('now')   group by user_id" )
-	for item in month:
+    if 'user' in session:
+        user_id = session['user']
+        user = Users.query.filter_by(id = user_id).first()
+    else:
+        user = None
+    print user.name
+    weektotal = None
+    monthtotal = None
+    trips = Trips.query.filter_by(user_id = user.id).all()	
+    #result = db.session.query(Trips).filter(datetime.now() -Trips.date < timedelta ( minutes = 1)).query(Trips.user_id, label('totalpoints', func.sum(Trips.points))).group_by(Trips.user_id).all()
+    month = db.engine.execute( 'SELECT sum(points) total, user_id  FROM  trips where user_id = ' + str(user.id )+ " and  date (date) between    date('now', '-30 days' ) and  date('now')   group by user_id" )
+    for item in month:
 		monthtotal =  item.total
-	week  = db.engine.execute( 'SELECT sum(points) total, user_id  FROM  trips where user_id = ' + str(user.id )+ " and  date (date) between    date('now', '-7 days' ) and  date('now')   group by user_id" )
-	for item in week:
+    week  = db.engine.execute( 'SELECT sum(points) total, user_id  FROM  trips where user_id = ' + str(user.id )+ " and  date (date) between    date('now', '-7 days' ) and  date('now')   group by user_id" )
+    for item in week:
 		weektotal =  item.total
-
-	return render_template('profile.html', user = user, trips = trips, week = weektotal, month = monthtotal)
+    print "stop 1"
+    return render_template('profile.html', user = user, trips = trips, week = weektotal, month = monthtotal)
 
 @app.route('/create')
 def create():
-    global user
+    if 'user' in session:
+        user_id = session['user']
+        user = Users.query.filter_by(id = user_id).first()
+    else:
+        user = None
     
     return render_template('create.html', user = user)
     
 @app.route('/details/<id>')
 def details(id = None):
-	global user
+    if 'user' in session:
+        user_id = session['user']
+        user = Users.query.filter_by(id = user_id).first()
+    else:
+        user = None
 	bid = Bids.query.filter_by( id = id).first()
 	
 	return render_template('details.html', user = user, item = bid)
@@ -176,7 +207,11 @@ def details(id = None):
 
 @app.route('/addtrip', methods = ['POST', 'GET'])
 def addtrip():
-    global user
+    if 'user' in session:
+        user_id = session['user']
+        user = Users.query.filter_by(id = user_id).first()
+    else:
+        user = None
     if request.method == 'POST':
 		if user == None:
 			return "Please signin"
@@ -196,7 +231,7 @@ def addtrip():
 		return "Your bid was added"
 
 
-
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 if __name__ == "__main__":
     app.run(debug=True)
 
