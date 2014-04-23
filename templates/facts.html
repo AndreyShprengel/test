@@ -1,0 +1,231 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+  	<title>SocialCO2</title>
+  	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js"></script>
+    <!-- Bootstrap -->
+    <link href="{{ url_for('static', filename="css/bootstrap.min.css") }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename="js/bootstrap.js") }}" rel="stylesheet">
+	</head>
+	<body>
+		<div align="center">
+			<h1>SocialC02</h1>
+		</div>
+	<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+			<div class="container">
+	      <div class="navbar-header">
+	        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	          <span class="sr-only">Toggle navigation</span>
+	          <span class="icon-bar"></span>
+	          <span class="icon-bar"></span>
+	          <span class="icon-bar"></span>
+	        </button>
+	        
+	      </div>
+	      <!-- Collect the nav links, forms, and other content for toggling -->
+	      <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
+	        <ul class="nav navbar-nav">
+	          <li ><a href="/">Home</a></li>
+	          <li><a href="about">About Us</a></li>
+	          <li><a href="facts">Facts</a></li>
+	          <li><a href="scores">Score Board</a></li>
+	        </ul>
+	        <ul class="nav navbar-nav navbar-right">
+	        	{% if user == None: %}
+	        	<li class="active"><a href="signin">Sign In</a></li>
+	        	{% else: %}
+	        	<li class="active"><a href="profile">My Profile</a></li>
+	        	{% endif %}
+	        </ul> 
+	      </div>
+	    </div>
+    </nav> 
+	<h2 align = 'center'>C02 bike facts</h2>
+	<div class = "row">
+	<div class = 'col-md-2'></div>
+	<div class = 'col-md-8'>
+	<p> *These facts are from the People for Bikes statistics library</p>
+	<p>
+      If 5% of New Yorkers commuting by private car or taxi switched to biking to work, they could save 150 million pounds of CO2 emissions per year, equivalent to the amount reduced by planting a forest 1.3 times the size of Manhattan. <br />
+
+      <em>Transportation Alternatives, 2008</em> - 
+      <em><a href="http://www.rollingcarbon.org/what_can_you_do.html" target="_blank">Rolling Carbon: Greenhouse Gas Emissions from Commuting in New York City</a></em>    </p>
+  
+    <p>
+      Half of U.S. schoolchildren are dropped off at school in the family car. If 20% of those living within two miles of school were to bike or walk instead, it would save 4.3 million miles of driving per day. Over a year, that saved driving would prevent 356,000 tons of CO2 and 21,500 tons of other pollutants from being emitted. <br />
+
+      <em>Pedroso, M., 2008</em> - 
+      <em><a href="http://www.saferoutespartnership.org/media/file/SRTS_GHG_lo_res.pdf" target="_blank">Safe Routes to School: Steps to a Greener Future</a></em>    </p>
+  
+    <p>
+      A 40% obese population requires 19% more food energy, resulting in an extra 0.4-1.0 Giga tonnes of CO2 emissions per year (for a population of 1 billion). <br />
+
+      <em>Edwards, P., and I. Roberts, 2009</em> - 
+      <em><a href="http://ije.oxfordjournals.org/cgi/content/abstract/dyp172v1" target="_blank">Population adiposity and climate change, International Journal of Epidemiology</a></em>    </p>
+  
+    <p>
+      89% of Americans believe that transportation investments should support the goals of reducing energy use. <br />
+
+      <em>National Association of Realtors and Transportation for America, 2009</em> - 
+      <em><a href="http://t4america.org/docs/011609_pr_nart4poll.pdf" target="_blank">2009 Growth and Transportation Survey</a></em>    </p>
+  
+    <p>
+      Bicyclists in Philadelphia ride 260,000 miles daily, saving 47,450 tons of CO2 from being emitted by cars each year. <br />
+
+      <em>Bicycle Coalition of Greater Philadelphia, 2008</em> - 
+      <em><a href="http://www.bicyclecoalition.org/files/Double%20Dutch--Bicycling%20Jumps%20in%20Philadelphia.pdf" target="_blank">Double Dutch: Bicycling Jumps in Philadelphia</a></em>    </p>
+  
+    <p>
+      20 billion extra pounds of CO2 are released annually due to overweight and obesity in the US. <br />
+
+      <em>Jacobson, S., and D. King, 2009</em> - 
+      <em><a href="http://www.sciencedirect.com/science?_ob=ArticleURL&_udi=B6VH8-4V053N5-1&_user=10&_coverDate=01%2F31%2F2009&_rdoc=3&_fmt=high&_orig=browse&_srch=doc-info(%23toc%236060%232009%23999859998%23771125%23FLA%23display%23Volume)&_cdi=6060&_sort=d&_docanchor" target="_blank">Measuring the potential for automobile fuel savings in the US: The impact of obesity, Transportation Research Part D: Transport and Environment, 14, 6-13</a></em>    </p>
+  
+    <p>
+      A 5% increase in the walkability of a neighborhood is associated with a per capita 32.1% increase in active travel, 6.5% fewer miles driven, 5.6% fewer grams of NOx emitted, and 5.5% fewer grams of volatile organic compounds (VOCs) emitted. <br />
+
+      <em>Frank, L., et al., 2006</em> - 
+      <em><a href="http://www.planning.org/japa/pdf/JAPAFrank06.pdf" target="_blank">Many pathways from land use to health: Associations between neighborhood walkability and active transportation, body mass index, and air quality, Journal of the American Planning Association, 72, 75-8</a></em>    </p>
+  
+    <p>
+      More CO2 is emitted by the United States' transportation sector than any other nation's entire economy, except for China. <br />
+
+      <em>Greene, D., and Schafer, A., 2003</em> - 
+      <em><a href="http://www.saferoutespartnership.org/media/file/SRTS_GHG_lo_res.pdf" target="_blank">in Pedroso, M., 2008, Safe Routes to School: Steps to a Greener Future</a></em>    </p>
+  
+    <p>
+      Bicycle traffic in Copenhagen prevents 90,000 tons of CO2 from being emitted annually. <br />
+
+      <em>City of Copenhagen, 2006</em> - 
+      <em><a href="http://www.vejpark2.kk.dk/.../pdf/464_Cykelregnskab_UK.%202006.pdf" target="_blank">Bicycle Account, 2006</a></em>    </p>
+  
+    <p>
+      A reduction in carbon dioxide emissions through an increase in biking and walking for transportation has greater health benefits for a population than from the increased use of lower-emission motor vehicles. An increase in active transportation is estimated to reduce 500 fatalities per million inhabitants in cities such as Delhi and London. <br />
+
+      <em>Woodcock, J., et al., 2009</em> - 
+      <em><a href="http://www.thelancet.com/journals/lancet/article/PIIS0140-6736(09)61714-1" target="_blank">"Public health benefits of strategies to reduce greenhouse-gas emissions: urban land transport," Lancet, 374, 1930-43</a></em>    </p>
+  
+    <p>
+      A 10 cent per gallon increase in the gasoline tax would reduce carbon emissions from vehicles in the United States by about 1.5%. <br />
+
+      <em>Davis, L., and L. Kilian, 2009</em> - 
+      <em><a href="http://www.nber.org/papers/w14685" target="_blank">"Estimating the effect of a gasoline tax on carbon emissions," National Bureau of Economic Research Working Paper No. 14685</a></em>    </p>
+  
+    <p>
+      If 20% of Madison, Wisconsin commuters biked to work, it would save 16,687 tons of carbon dioxide emissions, a value of $366,577. If 20% of Milwaukee commuters biked to work, it would save 40,718 tons of carbon dioxide emissions, a value of $821,282. <br />
+
+      <em>Grabow, M., et al., 2010</em> - 
+      <em><a href="http://www.bfw.org/education/index.php?category_id=4746" target="_blank">Valuing Bicycling's Economic and Health Impacts in Wisconsin, January 2010</a></em>    </p>
+  
+    <p>
+      If 20% of short car trips were replaced by bicycle trips in Milwaukee and Madison, Wisconsin, it would prevent 57,405 tons of carbon dioxide from being emitted, a value of $1.2 million. <br />
+
+      <em>Grabow, M., et al., 2010</em> - 
+      <em><a href="http://www.bfw.org/education/index.php?category_id=4746" target="_blank">Valuing Bicycling's Economic and Health Impacts in Wisconsin, January 2010</a></em>    </p>
+  
+    <p>
+      The air quality improvement and reduced greenhouse gas emissions due to bicycling in Wisconsin is worth more than $90 million every year. <br />
+
+      <em>Grabow, M., et al., 2010</em> - 
+      <em><a href="http://www.bfw.org/education/index.php?category_id=4746" target="_blank">Valuing Bicycling's Economic and Health Impacts in Wisconsin, January 2010</a></em>    </p>
+  
+    <p>
+      Increasing the mode share of all trips made by bicycling and walking from 12% to 15% could lead to fuel savings of 3.8 billion gallons a year and reduce greenhouse gas emissions by 33 million tons per year. This is equivalent to replacing 19 million conventional cars with hybrids. <br />
+
+      <em>Rails-to-Trails Conservancy, 2008</em> - 
+      <em><a href="http://www.railstotrails.org/atfa/" target="_blank">Active Transportation for America</a></em>    </p>
+  
+    <p>
+      A NASA analysis found that motor vehicles are the greatest contributor to atmospheric warming because they release pollutants and greenhouse gases that promote warming, while emitting few aerosols that counteract it. <br />
+
+      <em>NASA, 2010</em> - 
+      <em><a href="http://www.giss.nasa.gov/research/news/20100218a/" target="_blank">Road Transportation Emerges as Key Driver of Warming</a></em>    </p>
+  
+    <p>
+      There are 800 million car parking spaces in the U.S., totaling 160 billion square feet of concrete and asphalt. The environmental impact of all car parking spaces adds 10 percent to the CO2 emissions of the average automobile. <br />
+
+      <em>Chester, M., et al., 2010</em> - 
+      <em><a href="http://iopscience.iop.org/1748-9326/5/3/034001/fulltext" target="_blank">Parking infrastructure: energy, emissions, and automobile life-cycle environmental accounting, Environmental Research Letters, 5</a></em>    </p>
+  
+    <p>
+      Unnecessary vehicle idling in New York City:
+
+Costs drivers $28 million a year
+Causes as much smog-forming pollution as 9 million large trucks driving from the Bronx to Staten Island
+Wastes the gasoline equal to 40,000 cars driving from Midtown to JFK <br />
+
+      <em>Burgess, E., et al., 2009</em> - 
+      <em><a href="http://www.edf.org/documents/9236_Idling_Nowhere_2009.pdf" target="_blank">Idling Gets You Nowhere: The health, environmental and economic impacts of engine idling in New York City, Environmental Defense Fund</a></em>    </p>
+  
+    <p>
+      In 2008, the number of miles Americans drove declined by three percent. In the same year, traffic congestion dropped 30 percent. <br />
+
+      <em>Carol, 2009</em> - 
+      <em><a href="http://www.ceosforcities.org/blog/entry/2169" target="_blank">The Tipping Point, CEOs for Cities blog, 3 March 2009</a></em>    </p>
+  
+    <p>
+      43% of Denver bike sharing service, B-cycle, members said they used the bikes to replace car trips. <br />
+
+      <em>Denver B-cycle, 2010</em> - 
+      <em><a href="http://denver.bcycle.com/News.aspx?itemid=63" target="_blank">Denver B-cycle finishes successful first season with 102,000 B-cycle rides</a></em>    </p>
+  
+    <p>
+      The transportation sector is responsible for 71% of all U.S. petroleum use. <br />
+
+      <em>Bureau of Transportation Statistics, 2010</em> - 
+      <em><a href="http://www.bts.gov/publications/transportation_statistics_annual_report/2010/" target="_blank">Energy Information Administration Monthly Energy Review, U.S. Department of Energy, in Transportation Statistics Annual Report 2010, 143</a></em>    </p>
+  
+    <p>
+      A recent study of Barcelona’s bike sharing program, Bicing, found that the health benefits of using the system outweigh the risks by a ratio of 77 to one. The study also estimated that Bicing reduces carbon dioxide emissions by more than 9,000 metric tons every year. <br />
+
+      <em>Rojas-Rueda, D., et al., 2011</em> - 
+      <em><a href="http://www.ncbi.nlm.nih.gov/pubmed/21816732" target="_blank">The health risks and benefits of cycling in urban environments compared with car use: health impact assessment study,  BMJ 2011;343:d4521</a></em>    </p>
+  
+    <p>
+      When the complete life cycle of the following modes are taken into account, the carbon emissions are approximately:
+
+Bicycle, 21 g CO2/passenger/km traveled
+Electric-assist bicycle, 22 g CO2/passenger/km traveled
+Passenger car, 271 g CO2/passenger/km traveled
+Bus, 101 CO2/passenger/km traveled <br />
+
+      <em>European Cyclists' Federation, 2011</em> - 
+      <em><a href="http://www.ecf.com/wp-content/uploads/ECF_CO2_WEB.pdf" target="_blank">Cycle more often 2 cool down the planet: Quantifying CO2 savings of cycling</a></em>    </p>
+  
+    <p>
+      When car travel restrictions reduced morning traffic by 23% during the 1996 Olympics in Atlanta, ozone concentrations decreased 28% and acute care visits for asthma decreased 
+41%. <br />
+
+      <em>Friedman, M., et al., 2001</em> - 
+      <em><a href="http://jama.ama-assn.org/content/285/7/897" target="_blank">Impact of Changes in Transportation and Commuting Behaviors During the 1996 Summer Olympic Games in Atlanta on Air Quality and Childhood Asthma, Journal of the American Medical Association, 285(7):897</a></em>    </p>
+  
+    <p>
+      A San Francisco Bay Area study found that increasing biking and walking from 4 to 24 minutes a day on average would reduce cardiovascular disease and diabetes by 14% and decrease GHGE by 14%. <br />
+
+      <em>Maizlish, N. et al 2012</em> - 
+      <em><a href="http://ajph.aphapublications.org/action/cookieAbsent" target="_blank">Health Cobenefits and Transportation-Related Reduction in Greenhouse Gas Emissions in the San Francisco Bay Area</a></em>    </p>
+  
+    <p>
+      43% of Denver bike sharing service, B-cycle, members said they used the bikes to replace car trips. <br />
+
+      <em>Denver B-cycle, 2010</em> - 
+      <em><a href="http://denver.bcycle.com/News.aspx?itemid=63" target="_blank">Denver B-cycle finishes successful first season with 102,000 B-cycle rides</a></em>    </p>
+  
+    <p>
+      In 2008, the number of miles Americans drove declined by three percent. In the same year, traffic congestion dropped 30 percent. <br />
+
+      <em>Carol, 2009</em> - 
+      <em><a href="http://www.ceosforcities.org/blog/the-tipping-point" target="_blank">The Tipping Point, CEOs for Cities blog, 3 March 2009</a></em>    </p>
+  
+    <p>
+      When car travel restrictions reduced morning traffic by 23% during the 1996 Olympics in Atlanta, ozone concentrations decreased 28% and acute care visits for asthma decreased 
+41%. <br />
+
+      <em>Friedman, M., et al., 2001</em> - 
+      <em><a href="http://jama.jamanetwork.com/article.aspx?articleid=193572" target="_blank">Impact of Changes in Transportation and Commuting Behaviors During the 1996 Summer Olympic Games in Atlanta on Air Quality and Childhood Asthma, Journal of the American Medical Association, 285(7):897</a></em>    </p>
+  
+	</div>
+	</div>
+	</body>
+</html>
+
