@@ -125,7 +125,7 @@ def signin():
     else:
         user = None
     if request.method == 'POST':
-        usernam = request.form['username']
+        username = request.form['username']
         password = request.form['password']
         name = request.form['name']
         mpg = request.form['mpg']
