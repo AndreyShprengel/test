@@ -13,7 +13,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///trips.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db = SQLAlchemy(app, session_options = { 'expire_on_commit':False})
 
 
@@ -210,7 +210,7 @@ def about():
         user = None
         
         
-        return render_template('about.html', user = user)
+    return render_template('about.html', user = user)
         
         
 
