@@ -87,6 +87,7 @@
 	console.log("The server returned the following data:");
 	var uname = $( "#exampleInputEmail1" ).val();
     var pword = $( "#exampleInputPassword1" ).val();
+    var cpword = $( "#confirmInputPassword1" ).val();
     var n = $( "#fname" ).val() + " " + $( "#lname" ).val();
     var m = $("#mpg").val();
     
@@ -94,10 +95,17 @@
             url: "/signin",
             type: "POST",
             
-            data: { username: uname, password: pword, name: n, mpg: m},
+            data: { username: uname, password: pword, name: n, mpg: m, conf: cpword},
             success: function(data) {
-				console.log("The server returned the following data:");
-				window.location.href="/signin";
+				alert(data);
+				if(data == "Passwords Don't match")
+				{
+					window.location.href="/register";
+				}
+				else
+				{
+					window.location.href="/";
+				}
             }
         });
   });

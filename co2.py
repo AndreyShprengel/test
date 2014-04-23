@@ -34,21 +34,21 @@ class Users(db.Model):
         self.mpg = mpg
     
 class Trips(db.Model):
-	
+        
  
-	id = db.Column(db.Integer, primary_key=True)
-	points  = db.Column(db.Integer)
-	date = db.Column(db.DateTime)
-	
-	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-	user = db.relationship('Users',backref=db.backref('trips', lazy='dynamic'))
+        id = db.Column(db.Integer, primary_key=True)
+        points  = db.Column(db.Integer)
+        date = db.Column(db.DateTime)
+        
+        user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+        user = db.relationship('Users',backref=db.backref('trips', lazy='dynamic'))
  
-	def __init__(self, points, date, user):
-		""""""
+        def __init__(self, points, date, user):
+                """"""
 
-		self.points = points
-		self.date = date
-		self.user = user
+                self.points = points
+                self.date = date
+                self.user = user
 
 
 @app.route('/')
@@ -57,15 +57,21 @@ def landing():
     if 'user' in session:
         user_id = session['user']
         user = Users.query.filter_by(id = user_id).first()
-        print session['user']
+       
     else:
-        print "No user signed in"
+        
         user = None
     
     return render_template('home.html', user = user)
-@app.route('/echo/', methods = ['POST', 'GET'])
-def echo():
-    print "hello"
+@app.route('/facts', methods = ['POST', 'GET'])
+def facts():
+    if 'user' in session:
+        user_id = session['user']
+        user = Users.query.filter_by(id = user_id).first()
+    else:
+        user = None
+    
+    return render_template('facts.html', user = user)
     
 @app.route('/scores')
 def scores():
@@ -79,19 +85,19 @@ def scores():
     monthlynames = []
     stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date (date) between    date('now', '-7 days' ) and  date('now')  group by user_id order by points  DESC limit 5 ")
     for item in stuff:
-		weeklynames.append(Users.query.filter_by( id = item.user_id).first().name)
+                weeklynames.append(Users.query.filter_by( id = item.user_id).first().name)
     stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date (date) between    date('now', '-7 days' ) and  date('now')  group by user_id order by points  DESC limit 5 ")
     weekres= zip(weeklynames,stuff)
     
     stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date (date) between    date('now', '-1 days' ) and  date('now')  group by user_id order by points  DESC limit 5 ")
     for item in stuff:
-		dailynames.append(Users.query.filter_by( id = item.user_id).first().name)
+                dailynames.append(Users.query.filter_by( id = item.user_id).first().name)
     stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date (date) between    date('now', '-1 days' ) and  date('now')  group by user_id order by points  DESC limit 5 ")
     dayres= zip(dailynames,stuff)
     
     stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date (date) between    date('now', '-30 days' ) and  date('now')  group by user_id order by points  DESC limit 5 ")
     for item in stuff:
-		monthlynames.append(Users.query.filter_by( id = item.user_id).first().name)
+                monthlynames.append(Users.query.filter_by( id = item.user_id).first().name)
     stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date (date) between    date('now', '-30 days' ) and  date('now')  group by user_id order by points  DESC limit 5 ")
     monthres= zip(monthlynames,stuff)
     
@@ -123,6 +129,9 @@ def signin():
         password = request.form['password']
         name = request.form['name']
         mpg = request.form['mpg']
+        confirm = request.form['conf']
+        if confirm != password:
+            return "Passwords Don't match"
         
         new_user = Users(username, password,name,mpg)
         db.session.add(new_user)
@@ -171,14 +180,14 @@ def profile():
     print user.name
     weektotal = None
     monthtotal = None
-    trips = Trips.query.filter_by(user_id = user.id).all()	
+    trips = Trips.query.filter_by(user_id = user.id).all()      
     #result = db.session.query(Trips).filter(datetime.now() -Trips.date < timedelta ( minutes = 1)).query(Trips.user_id, label('totalpoints', func.sum(Trips.points))).group_by(Trips.user_id).all()
     month = db.engine.execute( 'SELECT sum(points) total, user_id  FROM  trips where user_id = ' + str(user.id )+ " and  date (date) between    date('now', '-30 days' ) and  date('now')   group by user_id" )
     for item in month:
-		monthtotal =  item.total
+                monthtotal =  item.total
     week  = db.engine.execute( 'SELECT sum(points) total, user_id  FROM  trips where user_id = ' + str(user.id )+ " and  date (date) between    date('now', '-7 days' ) and  date('now')   group by user_id" )
     for item in week:
-		weektotal =  item.total
+                weektotal =  item.total
     print "stop 1"
     return render_template('profile.html', user = user, trips = trips, week = weektotal, month = monthtotal)
 
@@ -192,18 +201,18 @@ def create():
     
     return render_template('create.html', user = user)
     
-@app.route('/details/<id>')
-def details(id = None):
+@app.route('/about')
+def about():
     if 'user' in session:
         user_id = session['user']
         user = Users.query.filter_by(id = user_id).first()
     else:
         user = None
-	bid = Bids.query.filter_by( id = id).first()
-	
-	return render_template('details.html', user = user, item = bid)
-	
-	
+        
+        
+        return render_template('about.html', user = user)
+        
+        
 
 @app.route('/addtrip', methods = ['POST', 'GET'])
 def addtrip():
@@ -213,22 +222,22 @@ def addtrip():
     else:
         user = None
     if request.method == 'POST':
-		if user == None:
-			return "Please signin"
-		#gather reuqest data
-		miles = float(request.form['miles'])
-		points = (8887/ user.mpg) * .0022 * miles
-		transportation = request.form['transportation']
-		if transportation == "Car":
-			points = points * -1
-		
-		new_trip = Trips( points, datetime.now(), user)
-		
-		
-		
-		db.session.add(new_trip)
-		db.session.commit()
-		return "Your bid was added"
+                if user == None:
+                        return "Please signin"
+                #gather reuqest data
+                miles = float(request.form['miles'])
+                points = (8887/ user.mpg) * .0022 * miles
+                transportation = request.form['transportation']
+                if transportation == "Car":
+                        points = points * -1
+                
+                new_trip = Trips( points, datetime.now(), user)
+                
+                
+                
+                db.session.add(new_trip)
+                db.session.commit()
+                return "Your trip was added! Thank you"
 
 
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
