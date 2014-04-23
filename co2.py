@@ -109,13 +109,13 @@ def scores():
 
 @app.route('/register')
 def register():
-    '''if request.method == 'POST':
-        user = request.form['username']
-        password = request.form['password']
-        name = request.form['name']
-        print name'''
+    if 'user' in session:
+        user_id = session['user']
+        user = Users.query.filter_by(id = user_id).first()
+    else:
+        user = None
         
-    return render_template('register.html')
+    return render_template('register.html',user = user)
 
 @app.route('/signin', methods = ['POST', 'GET'])
 def signin():
