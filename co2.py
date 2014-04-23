@@ -10,6 +10,7 @@ from string import upper
 from random import random, shuffle
 from copy import deepcopy
 from flask.ext.sqlalchemy import SQLAlchemy
+import os
 
 
 app = Flask(__name__)
