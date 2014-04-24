@@ -183,10 +183,10 @@ def profile():
     monthtotal = None
     trips = Trips.query.filter_by(user_id = user.id).all()      
     #result = db.session.query(Trips).filter(datetime.now() -Trips.date < timedelta ( minutes = 1)).query(Trips.user_id, label('totalpoints', func.sum(Trips.points))).group_by(Trips.user_id).all()
-    month = db.engine.execute( 'SELECT sum(points) total, user_id  FROM  trips where user_id = ' + str(user.id )+ " and  date (date) between    date('now', '-30 days' ) and  date('now')   group by user_id" )
+    month = db.engine.execute( 'SELECT sum(points) total, user_id  FROM  trips where user_id = ' + str(user.id )+ " and date  between    now() - interval '30 days' and  now()   group by user_id" )
     for item in month:
                 monthtotal =  item.total
-    week  = db.engine.execute( 'SELECT sum(points) total, user_id  FROM  trips where user_id = ' + str(user.id )+ " and  date (date) between    date('now', '-7 days' ) and  date('now')   group by user_id" )
+    week  = db.engine.execute( 'SELECT sum(points) total, user_id  FROM  trips where user_id = ' + str(user.id )+ " and  date  between    now() - interval '7 days' and  now()   group by user_id" )
     for item in week:
                 weektotal =  item.total
     print "stop 1"
