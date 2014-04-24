@@ -38,7 +38,7 @@ class Trips(db.Model):
         
  
         id = db.Column(db.Integer, primary_key=True)
-        points  = db.Column(db.Integer)
+        points  = db.Column(db.Float)
         date = db.Column(db.DateTime)
         
         user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
