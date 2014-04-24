@@ -227,7 +227,7 @@ def addtrip():
                         return "Please signin"
                 #gather reuqest data
                 miles = float(request.form['miles'])
-                points = (8887/ user.mpg) * .0022 * miles
+                points = (8887/ int(user.mpg)) * .0022 * miles
                 transportation = request.form['transportation']
                 if transportation == "Car":
                         points = points * -1
