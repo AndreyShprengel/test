@@ -84,22 +84,22 @@ def scores():
     dailynames = []
     weeklynames = []
     monthlynames = []
-    stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date (date) between    date('now', '-7 days' ) and  date('now')  group by user_id order by points  DESC limit 5 ")
+    stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date  between    now() - interval '7 days' and  now()  group by user_id order by points  DESC limit 5 ")
     for item in stuff:
                 weeklynames.append(Users.query.filter_by( id = item.user_id).first().name)
-    stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date (date) between    date('now', '-7 days' ) and  date('now')  group by user_id order by points  DESC limit 5 ")
+    stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date  between    now() - interval '7 days' and  now()  group by user_id order by points  DESC limit 5 ")
     weekres= zip(weeklynames,stuff)
     
-    stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date (date) between    date('now', '-1 days' ) and  date('now')  group by user_id order by points  DESC limit 5 ")
+    stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date  between    now() - interval '1 day' and  now()  group by user_id order by points  DESC limit 5 ")
     for item in stuff:
                 dailynames.append(Users.query.filter_by( id = item.user_id).first().name)
-    stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date (date) between    date('now', '-1 days' ) and  date('now')  group by user_id order by points  DESC limit 5 ")
+    stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date  between    now() - interval '1 day' and  now()  group by user_id order by points  DESC limit 5 ")
     dayres= zip(dailynames,stuff)
     
-    stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date (date) between    date('now', '-30 days' ) and  date('now')  group by user_id order by points  DESC limit 5 ")
+    stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date  between    now() - interval '30 days' and  now()  group by user_id order by points  DESC limit 5 ")
     for item in stuff:
                 monthlynames.append(Users.query.filter_by( id = item.user_id).first().name)
-    stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date (date) between    date('now', '-30 days' ) and  date('now')  group by user_id order by points  DESC limit 5 ")
+    stuff = db.engine.execute("SELECT sum(points) points, user_id FROM  trips Where  date  between    now() - interval '30 days' and  now()  group by user_id order by points  DESC limit 5 ")
     monthres= zip(monthlynames,stuff)
     
     
